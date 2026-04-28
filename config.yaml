@@ -1,0 +1,97 @@
+name: all_data_ligand
+working_directory: /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_13
+steps:
+#  - Annotations
+#  - Collate
+#  - Partition
+#  - MakeTestDatasetPsuedoPanDDA
+#  - MakeReannotationPsuedoPanDDA
+#  - KnownHitAlternateModel
+#  - MakeDataset
+#  - Train+Test
+  - MakeTrainTestLigandDB
+  - TrainTestLigand
+#  - MakeHitPanDDA
+#  - Summarize
+#  - RunPanDDAs
+#  - PanDDAStatus
+#  - EvaluatePanDDAs
+datasets:
+  - /dls/labxchem/data/*/*/processing/analysis/*
+  - /dls/labxchem/data/*/*/processing/analysis/*/*
+  - /dls/labxchem/data/*/*/processing/analysis/pandda_2_2023_06_27/1
+  - /dls/labxchem/data/*/*/processing/analysis/pandda_2_2023_09_04/1
+  - /dls/labxchem/data/lb32633/lb32633-1/processing/analysis/pandda_2_2023_08_22/pandda
+  - /dls/labxchem/data/lb32627/lb32627-22/processing/analysis/pandda_2_2023_08_17/pandda
+  - /dls/science/groups/i04-1/conor_dev/baz2b_test/BAZ2BA_6
+  - /dls/science/groups/i04-1/Downloads/pandda_PTP1B
+  - /dls/science/groups/i04-1/Downloads/pandda_BRD1A
+  - /dls/science/groups/i04-1/Downloads/pandda_JMJD2DA
+  - /dls/labxchem/data/*/*/processing/analysis/20230928/pandda
+exclude:
+  - /dls/labxchem/data/*/i*/processing/analysis/*
+  - /dls/labxchem/data/*/s*/processing/analysis/*
+  - /dls/labxchem/data/*/n*/processing/analysis/*
+  - /dls/labxchem/data/lb33200/lb33200-1/processing/analysis/20230928/pandda
+train:
+  max_epochs: 200
+#  model_file: /dls/science/groups/i04-1/conor_dev/pandda_2_gemmi/pandda_gemmi/cnn/model_ligand.pt
+#  model_file: /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_2/all_data220.pt
+#  model_file: /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_3/all_data372.pt
+#  model_file: /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_4/all_data295.pt
+#  model_file: /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_6/all_data36.pt
+  model_file:
+
+test:
+  initial_epoch: 1
+  test_interval: 1
+  test_convergence_interval: 10
+  partition: pandda_2_5
+  source: pandda_2
+  test_systems:
+#    - MRE11AA
+#    - SETDB1
+#    - NSP15_B
+    - BAZ2BA
+#    - PTP1B
+#    - JMJD2DA
+#    - BRD1A
+    - MRE11AA
+    - Zika_NS3A
+    - DCLRE1CA
+    - GluN1N2A
+    - Tif6
+    - AURA
+#    - A71EV2A
+    - SETDB1
+    - JMJD2DA
+#    - PTP1B
+    - BRD1A
+    - PP1
+    - PWWP_C64S
+    - NS3Hel
+    - NSP16
+custom_annotations:
+  databases:
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/test/database.db
+  panddas:
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data/lrh/low_ranking_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data/lrh/high_ranking_non_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_2/high_ranking_non_hits/high_ranking_non_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_2/low_ranking_hits/low_ranking_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_3/high_ranking_non_hits/high_ranking_non_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_3/low_ranking_hits/low_ranking_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_4/high_ranking_non_hits/high_ranking_non_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_4/low_ranking_hits/low_ranking_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_5/high_ranking_non_hits/high_ranking_non_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_5/low_ranking_hits/low_ranking_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_6/high_ranking_non_hits/high_ranking_non_hits_*
+  - /dls/science/groups/i04-1/conor_dev/edanalyzer/workspace_all_data_6/low_ranking_hits/low_ranking_hits_*
+cpus: 20
+panddas:
+  pandda_key: 20231205
+  cpus: 36
+  mem: 180
+  max_cores: 80
+evaluate:
+  high_confidence_ligands: /dls/science/groups/i04-1/conor_dev/edanalyzer/high_confidence_ligands.yaml
